@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, MaxPool2D, AveragePooling2D, Dropout, Dense, Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import plot_model
-
+train = tf.keras.preprocessing.image_dataset_from_directory()
 model = tf.keras.Sequential()
 model.add(Conv2D(filters=128, kernel_size=3, strides=1, activation="relu", padding="same"))
 model.add(Conv2D(filters=64, kernel_size=2, strides=1, activation="relu", padding="same"))
