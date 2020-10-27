@@ -1,7 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Conv2DTranspose, AvgPool2D
-from tensorflow.keras.layers import LeakyReLU
-import matplotlib.pyplot as plt
+from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Conv2DTranspose, AvgPool2D, DepthwiseConv2D
 import numpy as np
 
 train = tf.keras.preprocessing.image_dataset_from_directory(
@@ -18,22 +16,23 @@ model = tf.keras.Sequential()
 model.add(tf.keras.layers.BatchNormalization())
 model.add(Conv2DTranspose(kernel_size=2, filters=256, strides=1, padding="same"))
 model.add(Conv2D(kernel_size=2, strides=1, filters=128, padding="same"))
-
 model.add(Conv2D(kernel_size=2, strides=1, filters=128, padding="same"))
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 
 model.add(MaxPool2D(pool_size=2, strides=1, padding="same"))
-
 model.add(tf.keras.layers.BatchNormalization())
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=64, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=64, padding="same"))
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 
 model.add(MaxPool2D(pool_size=2, strides=1, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=32, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=32, padding="same"))
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 
 model.add(AvgPool2D(pool_size=2, strides=1, padding="same"))
 
@@ -41,18 +40,19 @@ model.add(tf.keras.layers.BatchNormalization())
 model.add(Conv2D(kernel_size=2, strides=1, filters=16, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=16, padding="same"))
-
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 model.add(MaxPool2D(pool_size=2, strides=1, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=8, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=8, padding="same"))
-
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 model.add(MaxPool2D(pool_size=2, strides=1, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=4, padding="same"))
 
 model.add(Conv2D(kernel_size=2, strides=1, filters=4, padding="same"))
+model.add(DepthwiseConv2D(kernel_size=2, strides=1))
 
 model.add(AvgPool2D(pool_size=2, strides=1, padding="same"))
 
@@ -83,7 +83,7 @@ model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
 	monitor='val_accuracy',
 	mode='max',
 	save_best_only=True)
-model.fit(train, validation_data=test, epochs=5, shuffle=True, batch_size=2, callbacks=model_checkpoint_callback)
+model.fit(train, validation_data=test, epochs=15, shuffle=True, batch_size=2, callbacks=model_checkpoint_callback)
 model.load_weights(checkpoint_filepath)
 model.summary()
 tf.keras.utils.plot_model(model, to_file="dot_ig_file.png", show_shapes=True, show_layer_names=True, dpi=1200)
