@@ -14,3 +14,7 @@ test = tf.keras.preprocessing.image_dataset_from_directory(
 	r"F:\Pycharm_projects\pneumonia detection with deep learning\-pneumonia-detection-with-deep-learning\chest_xray\test",
 	labels="inferred", image_size=(64, 64), shuffle=True)
 model.evaluate(test)
+
+
+class mithil():
+	pc = "rtx"
