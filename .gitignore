@@ -3,3 +3,5 @@
 *.pb
 *.data-00000-of-00001
 *.index
+checkpoint
+models _temp/part-00000-of-00001.data-00000-of-00001.tempstate2366427847150224234
