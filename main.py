@@ -19,6 +19,8 @@ model.add(Conv2D(filters=512, kernel_size=2, strides=1))
 model.add(Flatten())
 model.add(Dense(128))
 model.add(Dense(2))
+model.compile(optimizer="adam", metrics=["accuracy"], loss="sparse_categorical_crossentropy")
+
 checkpoint_filepath = r'F:\Pycharm_projects\pneumonia detection with deep learning\-pneumonia-detection-with-deep-learning\models '
 model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
 	filepath=checkpoint_filepath,
