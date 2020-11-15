@@ -1,7 +1,7 @@
 # Made by mithil salunkhe
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Conv2DTranspose, AvgPool2D, LeakyReLU, \
-	BatchNormalization, DepthwiseConv2D, DepthwiseConv2D
+	BatchNormalization
 from tensorflow.keras import layers
 import numpy as np
 
