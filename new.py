@@ -4,7 +4,7 @@ from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Conv2DTra
 	BatchNormalization
 from tensorflow.keras import layers
 import numpy as np
-
+tf.function(experimental_compile=True)
 physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
@@ -118,8 +118,8 @@ model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoi
                                                                mode='max',
                                                                save_best_only=True)
 
-model.fit(train, validation_data=test, epochs=15, batch_size=12, callbacks=model_checkpoint_callback)
-model.load_weights(checkpoint_filepath)
+model.fit(train, validation_data=test, epochs=15, batch_size=32, callbacks=model_checkpoint_callback)
+model.load(checkpoint_filepath)
 model.summary()
 tf.keras.utils.plot_model(model, to_file="dot_ig_file.png", show_shapes=True, show_layer_names=True, dpi=1200)
 model.evaluate(test)
@@ -130,3 +130,6 @@ input_arr = tf.keras.preprocessing.image.img_to_array(image)
 input_arr = np.array([input_arr])  # Convert single image to a batch.
 predictions = model.predict(input_arr)
 print(np.argmax(predictions))
+model.save(
+	r"F:\Pycharm_projects\pneumonia detection with deep learning\-pneumonia-detection-with-deep-learning\model_final",
+	overwrite=True, include_optimizer=True)
