@@ -4,7 +4,8 @@ from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Conv2DTra
 	BatchNormalization
 from tensorflow.keras import layers
 import numpy as np
-tf.function(experimental_compile=True)
+import datetime
+
 physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
@@ -109,16 +110,20 @@ model.add(BatchNormalization())
 model.add(Dense(10, activation="softmax"))
 tf.keras.optimizers.Adam(
 	learning_rate=0.0001, )
-model.compile(optimizer="adam", metrics=["accuracy"], loss="sparse_categorical_crossentropy", )
-
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
 checkpoint_filepath = r'F:/Pycharm_projects\pneumonia detection with deep learning/-pneumonia-detection-with-deep-learning/models'
 
 model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_filepath,
                                                                monitor='val_accuracy',
                                                                mode='max',
                                                                save_best_only=True)
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
-model.fit(train, validation_data=test, epochs=15, batch_size=32, callbacks=model_checkpoint_callback)
+model.fit(train, validation_data=test, epochs=15, batch_size=32,
+          callbacks=[model_checkpoint_callback, tensorboard_callback])
 model.load(checkpoint_filepath)
 model.summary()
 tf.keras.utils.plot_model(model, to_file="dot_ig_file.png", show_shapes=True, show_layer_names=True, dpi=1200)
