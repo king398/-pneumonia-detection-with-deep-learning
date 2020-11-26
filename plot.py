@@ -9,4 +9,4 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 cv2.imwrite("128imagenormal.jpg", resize)
 
-print("losld")
+print("losdld")
